@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Your Web Page Title</title>
+    <style>
+        button.aiTextImage {
+            width: 5%;
+            height: 10%;
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background-image: url("assets/user.png");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: none;
+        }
+
+        button.closeText {
+            width: 10%;
+            height: 10%;
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background-image: url("assets/close.png");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: none;
+        }
+
+        input#inputField {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+        }
+
+        .box {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            border: 2px solid #ccc;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            visibility: hidden;
+            width:20%;
+            right:20px;
+            bottom:90px;
+            top:20px;
+        }
+
+        .message-container {
+            overflow-y: auto;
+            max-height: 300px; /* Adjust the maximum height as needed */
+        }
+
+        .message {
+            border-radius: 10px;
+            padding: 8px;
+            margin: 5px;
+            max-width: 70%;
+        }
+
+        .user-message {
+            background-color: #c2f0c2;
+            align-self: flex-end;
+        }
+
+        .website-message {
+            background-color: #8dc4ff; /* Blue color for website messages */
+        }
+
+        #inputField {
+            width: 60%; /* Adjust the width as needed */
+            margin-right: 5px; /* Adjust the margin as needed */
+        }
+
+        #sendMessageButton {
+            width: 30%; /* Adjust the width as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="openChat();" class="aiTextImage"></button>
+    <div id="textBox" class="box" style="visibility:hidden">
+        <button onclick="closeChat();" class="closeText" id="closeChatButton"></button>
+        <div class="message-container" id="messageContainer">
+            <!-- Messages will be added here dynamically -->
+        </div>
+        <div style="display: flex; align-items: center;">
+            <input type="text" id="inputField" placeholder="Type your message...">
+            <button onclick="sendMessage();" id="sendMessageButton">Send</button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    function openChat() {
+        document.getElementById("textBox").style.visibility = "visible";
+    }
+
+    function closeChat() {
+        document.getElementById("textBox").style.visibility = "hidden";
+    }
+
+    function sendMessage() {
+        var inputField = document.getElementById("inputField");
+        var messageContainer = document.getElementById("messageContainer");
+        var message = inputField.value.trim();
+
+        if (message !== "") {
+            var newMessage = document.createElement("div");
+            newMessage.className = "message user-message";
+            newMessage.textContent = message;
+            messageContainer.appendChild(newMessage);
+
+            // Optionally, you can clear the input field after sending a message
+            inputField.value = "";
+            receiveWebsiteMessage("Hello from the website!");
+        }
+    }
+
+    // Event listener for Enter key
+    document.getElementById("inputField").addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    });
+
+    // Function to simulate receiving a message from the website
+    function receiveWebsiteMessage(message) {
+        var messageContainer = document.getElementById("messageContainer");
+
+        var newMessage = document.createElement("div");
+        newMessage.className = "message website-message";
+        newMessage.textContent = message;
+        messageContainer.appendChild(newMessage);
+    }
+
+    // Example: Simulate receiving a message from the website after 2 seconds
+    setTimeout(function () {
+        receiveWebsiteMessage("Hello from the website!");
+    }, 2000);
+</script>
+
+</html>
